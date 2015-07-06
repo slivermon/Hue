@@ -1,7 +1,10 @@
-import urllib.request
+import requests
+import json
+# import time
+# To access debug panel http://<bridge ip address>/debug/clip.html
 
 # For easy debug, skip data entry and use stored values for api and IP
-skip_entry = True
+skip_entry = False
 
 print('Welcome to the Hue API Experimenter.')
 
@@ -15,16 +18,35 @@ else:
     ip_address = ''
 
 # Construct the API request URL
-api_request_base_url = 'http://' + str(ip_address) + '/api/' + api_key + '/lights/'
-print(api_request_base_url)
+base_url = 'http://' + str(ip_address) + '/api/' + api_key + '/lights/'
+print(base_url)
 
-# Encode api_request_base_url
-# encoded_api_request_base_url = urllib.parse(api_request_base_url)
+# Light change menu; would be great to pull the list from the API next time
+print('Which light do you want to use?')
+print('   1 - Floor Light')
+print('   2 - Ivy Light')
+print('   3 - Table Light')
+print('   4 - Iris')
+print('   5 - Bloom')
+select_light = input('Enter number of light: ')
 
-# Ugly response of lights on network
-print('These are the lights on the local network:')
-light_network_state = urllib.request.urlopen(api_request_base_url)
-print(light_network_state)
+# Change light attribute
+brightness = input('Enter new brightness value (1 - 254): ')
+brightness = int(brightness) # Must be an integer or it will error
 
+# Create URL and payload
+change_brightness_url = base_url + select_light  + '/state/'
+brightness_payload = {'bri': brightness}
+
+# For debug
+print()
+print('API URL: ' + change_brightness_url)
+print('Payload: ' + str(brightness_payload))
+print()
+
+# Make the call!
+print('Changing brightness...')
+request = requests.put(change_brightness_url, data=json.dumps(brightness_payload)) # Store response in 'request' variable; data=json.dumps() is for json payloads, params=variable is for query strings
+print(request)
 
 
