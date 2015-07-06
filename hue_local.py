@@ -1,7 +1,7 @@
 import requests
 import json
-# import time
 # To access debug panel http://<bridge ip address>/debug/clip.html
+# More about the 'requests' module:  http://docs.python-requests.org/en/latest/user/quickstart/#more-complicated-post-requests
 
 # For easy debug, skip data entry and use stored values for api and IP
 skip_entry = False
