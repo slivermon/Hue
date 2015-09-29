@@ -16,7 +16,6 @@ ip_address = credentials['ip']
 
 # Construct the API request URL
 url = "http://{0}/api/{1}/lights/".format(ip_address, api_key)
-print(url)
 
 # Get a list of all lights from API
 resp = requests.get(url)
@@ -33,8 +32,7 @@ for light in data_lights:
 def showLight():
     print "### Lights on the network ###\n"
     for light in light_list:
-        print "    {} - {}".format(light, light_list[light])
-    print
+        print "    {} - {}\n".format(light, light_list[light])
 
 # Get light choice
 def getLight():
@@ -70,7 +68,7 @@ def modifyBright(key, brightness):
     request = requests.put(hue_api_url, data=json.dumps(payload_bri))
     print "API:  {}".format(hue_api_url)
     print "Payload:  {}".format(payload_bri)
-    print "Done!"
+    print "Done!\n"
 
 # Main function
 # Does not handle False values yet
@@ -86,9 +84,9 @@ def hueCycle():
     brightness = getBright()
 
     # Cycle the brightness
+    direction = 'up'
     step = 15
     loops = 100
-    direction = 'up'
     min_bright = 40
     sleep_dur = 0.25
     for cycles in range(1,loops):
